@@ -13,3 +13,64 @@ This is the async version provided by asyncio.
 It suspends the coroutine for 1 second without blocking the event loop.
 While one coroutine is "sleeping", the event loop can schedule and run other coroutines.
 So → await asyncio.sleep(1) blocks only the coroutine, not the whole thread.
+
+
+
+🔹 Parallel example with asyncio.gather
+Here all tasks sleep at the same time → total ~1 second:
+asyncio.gather() or asyncio.create_task() → parallel/concurrent.
+
+1. [worker(i) for i in range(5)] is the Pythonic shortcut for creating a list.
+It’s equivalent to:
+tasks = []
+for i in range(5):
+    tasks.append(worker(i))
+
+worker(i) does not run immediately.
+It just creates a coroutine object (like a "promise to run later").
+If you don’t await them or pass them into something like asyncio.gather(),
+ they’ll never execute → you will get a warning in that case
+
+2. Meaning of *tasks
+The * operator in Python unpacks a list/tuple into separate arguments.
+The * operator is argument unpacking.
+Example:
+def add(a, b, c):
+    return a + b + c
+
+nums = [1, 2, 3]
+print(add(*nums))   # same as add(1, 2, 3)
+
+
+🔹 Parallel example with asyncio.create_task()
+1. When you do:
+tasks = [worker(i) for i in range(5)]
+await asyncio.gather(*tasks)
+
+1. worker(i) creates coroutine objects, but they don’t start running yet.
+2. Only when you await asyncio.gather(...), the event loop starts scheduling them.
+3. They all run concurrently, but nothing happens before the gather line.
+
+2. When you do:
+tasks = [asyncio.create_task(worker(i)) for i in range(5)]
+# At this point, all tasks are already scheduled and may be running!
+
+# You could do other work here while they run:
+print("Tasks are running in the background...")
+
+await asyncio.gather(*tasks)
+
+
+1. asyncio.create_task(coro) wraps the coroutine in a Task object.
+2. That task is immediately scheduled on the event loop 
+— it can start running before you await gather.
+3. This lets you fire off background work,
+ then do something else, then later wait for completion.
+
+Analogy 🏃
+Plain coroutines (worker(i)) = “I’ve written down instructions
+ for 5 workers, but they’re just waiting around until I say go.”
+
+asyncio.create_task(worker(i)) = “I’ve hired 5 workers 
+and they’ve already started working while I go do something else. 
+I can check back later.”
