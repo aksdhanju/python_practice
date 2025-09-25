@@ -1,0 +1,15 @@
+🔹 time.sleep(1)
+
+This is a blocking call from the standard library.
+It makes the current thread pause execution for 1 second.
+During this sleep:
+No other code in that thread runs.
+If you are using it in the main thread, your whole program will be idle for that second (unless other threads exist).
+So → time.sleep(1) blocks the thread.
+
+🔹 asyncio.sleep(1)
+
+This is the async version provided by asyncio.
+It suspends the coroutine for 1 second without blocking the event loop.
+While one coroutine is "sleeping", the event loop can schedule and run other coroutines.
+So → await asyncio.sleep(1) blocks only the coroutine, not the whole thread.
