@@ -1,30 +1,30 @@
 import asyncio
 
 # Blocking example
-# import time
-# for i in range(5):
-#     print(f"\rLoading {i}", end="")
-#     time.sleep(1) # thread blocked
+import time
+for i in range(5):
+    print(f"\rLoading {i}", end="")
+    time.sleep(1) # thread blocked
 
-# print('\nNow async sleep')
-# # Async example
+print('\nNow async sleep')
+# Async example
 
-# async def main():
-#     for i in range(5):
-#         print(f"\rLoading {i}", end="")
-#         await asyncio.sleep(1) # only coroutine blocked
+async def main():
+    for i in range(5):
+        print(f"\rLoading {i}", end="")
+        await asyncio.sleep(1) # only coroutine blocked
 
-# asyncio.run(main())
-# print('\n async sleep done')
+asyncio.run(main())
+print('\n async sleep done')
 
 
-# async def main():
-#     for i in range(5):
-#         print(f"Task {i} starting")
-#         await asyncio.sleep(1)  # waits sequentially
-#         print(f"Task {i} done")
+async def main():
+    for i in range(5):
+        print(f"Task {i} starting")
+        await asyncio.sleep(1)  # waits sequentially
+        print(f"Task {i} done")
 
-# asyncio.run(main())
+asyncio.run(main())
 
 
 async def worker(i):

@@ -1,0 +1,43 @@
+cur.execute("select * from employees")
+Above statement does not really fetches the result. It just prepares the statement
+
+If record to be inserted is already present in db
+
+✅ Two ways to handle this:
+Option 1: Catch the exception and ignore it
+import mysql.connector
+from mysql.connector import IntegrityError
+
+try:
+    cur.execute("""
+    INSERT INTO employees 
+    (first_name, last_name, email, phone, hire_date, job_title, salary, department)
+    VALUES ('David', 'Wilson', 'david.wilson@example.com', '555-1111', '2019-11-18', 'HR Specialist', 60000.00, 'Human Resources')
+    """)
+    con.commit()
+except IntegrityError:
+    print("Duplicate email found, ignoring insert.")
+
+Option 2: Use INSERT IGNORE (MySQL feature)
+
+This tells MySQL: "insert if possible, otherwise skip duplicates silently."
+
+cur.execute("""
+INSERT IGNORE INTO employees 
+(first_name, last_name, email, phone, hire_date, job_title, salary, department)
+VALUES ('David', 'Wilson', 'david.wilson@example.com', '555-1111', '2019-11-18', 'HR Specialist', 60000.00, 'Human Resources')
+""")
+con.commit()
+
+Option 3: Use ON DUPLICATE KEY UPDATE
+
+If you want to update the row instead of ignoring:
+
+cur.execute("""
+INSERT INTO employees 
+(first_name, last_name, email, phone, hire_date, job_title, salary, department)
+VALUES ('David', 'Wilson', 'david.wilson@example.com', '555-1111', '2019-11-18', 'HR Specialist', 60000.00, 'Human Resources')
+ON DUPLICATE KEY UPDATE
+phone=VALUES(phone), job_title=VALUES(job_title), salary=VALUES(salary)
+""")
+con.commit()

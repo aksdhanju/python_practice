@@ -1,0 +1,78 @@
+
+I just want to extract something with numbers and that symbol
+Regex 1: 
+Order number: (?P<order_number>[\d\-]+)
+Regex 2:
+Order number: (?P<order_number>[\d\-]{1,})
+
+Text:
+Order number: 123456
+Order number: 123-456
+
+
+Agar isme zyada symbol hote to saare daalne parte, that is why regex 2 hai
+Regex 1: <td>(?P<item>[^<>]+)</td>
+Regex 2: <td>(?P<item>[\w &]+)</td>
+Text:
+<td>Yipidata & Edison</td>
+
+
+->>> Extract HTML Tags
+Regex:
+(<[^>]+>){1,15}
+
+Part by part:
+< → match a literal < (start of an HTML tag).
+[^>]+ → match one or more characters that are not >.
+This ensures we stay inside the tag content.
+For example: tr, td, div class="box".
+> → match the literal closing angle bracket.
+
+So together:
+<[^>]+>
+= match exactly one HTML tag (opening or closing).
+
+Outer part:
+(<[^>]+>){1,15}
+(...) groups the tag regex.
+{1,15} → repeat between 1 and 15 times.
+So this means:
+👉 Match a sequence of 1 to 15 consecutive HTML tags.
+
+Your text:
+<tr><td><div><span><p></p></span></div></td></tr>
+
+<tr>
+<td>
+<div>
+<span>
+<p>
+</p>
+</span>
+</div>
+</td>
+</tr>
+
+That’s 10 tags total.
+This fits {1,15} so the regex matches the entire sequence.
+
+Difference between versions:
+<[^>]+> → matches only one tag, e.g. <tr>.
+(<[^>]+>)+ → matches one or more tags in sequence, e.g. <tr><td><div>....
+(<[^>]+>){1,15} → same idea, but explicitly restricts it 
+to at most 15 tags in a row.
+
+⚡ So in short:
+
+<[^>]+> = one label (tag).
+(<[^>]+>)+ = multiple labels (any number, at least one).
+(<[^>]+>){1,15} = multiple labels, but between 1 and 15.
+
+
+-->>>What is a "group" in regex?
+In regex, groups are portions of your match enclosed in parentheses (...).
+They let you capture specific sub-parts of what you matched.
+
+group(0) → always the entire match.
+group(1), group(2), … → the captured groups in order.
+.groups() → returns a tuple of all captured groups (except group 0).
