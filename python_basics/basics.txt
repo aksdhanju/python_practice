@@ -1,0 +1,118 @@
+Section 1:
+->>Compiler vs Interpreter
+
+2 methods of translation to convert one langauge to another
+1st is Compiler
+2nd is Interpreter
+
+Making a dish example. Chinese recipe from which lady wants to prepare a dish
+Compiling is done 1 time
+Interpreting is done n times for n times making a dish
+
+Compiler
+1. 1 time translation
+2. File in machine code is generated
+3. Execution after translation
+4. Independent Execution
+5. If errors, no compilation
+
+Interpreter
+1. N time translation
+2. File still in source code
+3. Execution while translation
+4. Execution in runtime environment
+5. Partial Execution till errors
+
+
+->>Python is hybrid langauge
+Hybrid means compiler + interpreted langauge
+2 times translation is done here
+Compilation(Chinese to English) + Interpretation is done(English to hindi line by line)
+
+See Recipe example
+
+->> Python is platform Independent
+It is portable
+What is platform? Platform is OS which provides us environment to run our applications
+like windows env or mac env or linux env
+We run platform on a machine like mac machine etc.
+
+Executable file depends on the platform or OS
+source code is same on all machines
+but transalated file/compiled source code file if runs on mac will not run on windows machine.
+you need to compile/translate source code again on windows machine
+
+If we create .pyc file which is compiled file of python(It is python bytecode), then we say it is portable
+PVM(Python virtual machine) is platform dependent. it is different for windows machine, mac machine.
+Its like python running inside a browser, like its own runtime environment
+But python program is platform Independent
+
+Similarly Java, C# is hybrid langauge
+
+
+->> Programming paradigms - strategies for developing bigger applications
+1. Procedural Programming
+2. Object Oriented Programming
+3. Functional Programming
+
+0. Monolithic programming
+Monolithic programming: Entire Programming is having 1 single piece
+Ultimate aim is making software development easy.
+
+1. Procedural Programming
+Some instructions are kept separately and executed separately. We call them function or procedure or rountine.
+We break big monolith program into smaller tasks called function or procedures.
+functions are performing smaller bu complete tasks.
+This is procedural programming
+
+Related functions can be kept in a library or module
+Bigger application is broker into smaller modules/functions
+
+Also similar is modular programming.
+
+2. Object Oriented Programming
+Till now we talked only of set of instructions. We grouped them in functions or procedure or rountine.
+But prgram will also have objects or variables having data
+We focus on data(variables/attributes) and opeartions(functions/behaviour perform operation on data) both
+And we combine above in a class.
+Object is running instance of a class
+
+Everything in Python is an object
+By nature, python is Object Oriented
+And it also supports Procedural programming
+
+3. Functional Programming
+It supports mathematical functions in programming.
+Like in maths, you give input and get output.
+Similarly here.
+
+Python supports statistical functions so python supports AI,ML,Data science.
+
+->>Python libraries
+Libraries are ready made code which make it easier to develop applications
+
+1. For desktop application(software which runs on single PC)
+PySide
+Tkinter
+
+2. For Web application
+Flask
+Django
+Tornado
+FastAPI
+
+3. For games
+Pygame
+Panda3D
+
+4. For Database programming
+SQLite
+PyMySQL
+
+5. For Datascience
+Numpy
+Pandas
+
+6. Machine learning + AI
+Tensorflow
+Scikit Learn

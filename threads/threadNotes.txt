@@ -1,0 +1,7 @@
+We can create thread using
+1. Function (function which is just part of a module)
+2. Method (function which is part of a class)
+3. Class
+
+
+
