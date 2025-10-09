@@ -1,0 +1,88 @@
+->>Section 41: Lambda functions, Nested functions, Decorators
+
+
+->>Function as objects
+If a language treats functions as objects, they are called first class function.
+In python, we treat functions as objects. So python supports first class functions.
+
+__name__, __doc__ are properties of a function. Means function is object in python
+
+Function has properties and we can assign a function to a variable
+
+->> Nested functions
+Function inside another function
+
+->> Function as parameters
+function takes another function as parameter
+Function which takes another function as paramter is called higher order function
+
+See example 1 and example 2 in code
+
+We are passing functionality to arithmetic function
+We are passing x and y to arithmetic function and telling it what it should do with x and y
+
+
+->> Returning a function
+Outer function returns inner function
+In this case also, outer function is called higher order function
+
+Question: What is higher order function?
+It is a function which takes a function as parameter or returns a function
+
+directly we cant access inner function
+but we can through calling outer function
+and returning inner function
+
+->> Closure function
+A function is called closure function if below 3 conditions satisfy:
+1. It is a nested function
+2. It returns an inner function
+3. Inner function will access variables of outer function
+
+# now below outer() is closure function
+def outer():
+    msg = 'Welcome'
+    def inner():
+        print('+'*10)
+        print(msg)
+        print('+'*10) 
+    return inner
+
+f = outer()
+f()
+
+# even though ref of inner function is returned but still outer function variable(msg) are being accessed
+
+
+# example 3: counter closure function example
+
+# If the inner function is modifying the variables of outer function
+# then we need to declare the variable as nonlocal
+# Then only inner function can modify the value. Else inner function can just read the value
+
+->> Decorator function
+
+Decorator function = Closure function + Function as a parameter
+Earlier closure function was return function by not taking function as a parameter
+
+def outer(f):
+    def inner():
+        print('+'*10) #inner function can do some processing before and after below f() call
+        f() #earlier inner function was accesing variables of outer function. Now inner function is calling function passed as parameter in outer function
+        print('+'*10) 
+    return inner
+
+def display():
+    print('Welcome')
+
+r = outer(display)
+r()
+# r is reference to inner function which is printing something, calling function and printing something
+
+
+->> Lambda function
+1. Also called as anonymous function
+
+
+->>Called class
+Like closure function
