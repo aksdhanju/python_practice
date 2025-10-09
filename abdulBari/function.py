@@ -248,8 +248,28 @@ display()
 # if @decorator was not there, then calling display() function would print only Welcome
 # with @decorator present, everything inside inner is printed
 
+# 
+#  Caller class
+#
 
+class Day:
+    def __init__(self):
+        self.days = {0: 'Sunday', 1: 'Monday', 2: 'Tuesday', 3: 'Wednesday', 4: 'Thursday', 5: 'Friday', 6: 'Saturday'}
+
+    def __call__(self, day_number):
+        return self.days[day_number]
+    
+d = Day()
+print(d.__call__(1))
+
+# call method can be directly called using d(1)
+# we can treat object of this class as the function
+print(d(3))
+# how above is possible. Because we have implemented __call__ method
+# So if a class is having __call__ method implemented, it is called caller class.
 
 # 
 #  Lambda function
 #
+
+
