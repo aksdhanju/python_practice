@@ -20,3 +20,340 @@ C. Regular expressions
 -Special Characters
 -Sequences
 
+
+->> What is pattern matching
+We need to find if pattern is in string or not?
+
+Pattern 1 = 'and'
+
+s1 = 'android'
+s2 = 'handle'
+s3 = 'and'
+
+
+Pattern 2 = 'com|org'
+
+s1 = 'com'
+s2 = 'org'
+
+Pattern 3 = '[abcd]'
+A string can have any of these Characters
+a or b or c or d
+
+s1 = 'a'
+s2 = 'b'
+s3 = 'c'
+s4 = 'd'
+
+Pattern 4 = '[abc]+'
+You can take a or b or c 1 or more times
+
+s1 = 'a'
+s2 = 'aa'
+s3 = 'aaaaaaaabbc'
+s4 = 'b'
+s5 = 'bbb'
+s6 = 'babbcc'
+s7 = 'cab'
+
+So this single pattern is matching so many strings
+
+
+
+->> (Lecture 2) How to define patterns
+->> (Lecture 2) Quantifiers -> Special symbol that are used for defining patterns
+In patterns we can repeat characters. Quantifiers define how many times we can repeat characters
+
++      1 or more times repetition is allowed
+*      0 or more times repetition is allowed
+?      0 or 1 (Nothing or just 1 time)
+{m}    exactly m times
+{m,n}  from m to n. minimum is m. maximum is n. If m, n not mentioned, m is 0 and n is infinity
+
+
+->>Examples of + quantifier
+
+a 
+a
+
+a+
+aa
+
+a+
+aaa
+
+simple bracket means all character from given brackets, you have to take and together. its and of a and b and c
+So there is 1 valid strings/pattern combination
+(ab)
+ab
+
+both a and b should be there and should match
+(ab)+
+a #no match
+
+ab together should match. Below will not match
+(ab)+
+aaaaabbbb #no match
+
+(ab)+
+ababab #matches
+
+Entire string/pattern abc should be in string/text
+abc
+abc
+
+square bracket means any character from given brackets you can take once. its or of a or b or c
+So there are 3 valid strings
+[abc]
+a
+
+[abc]
+b
+
+[abc]
+c
+
+What if i put + now. Now i can repeat characters as many times as pobbile
+[abc]+
+aabc #matches
+
+[abc]+
+bcccccbbbbbccc #matches
+
+->>Examples of * quantifier
+Only difference with + is string can be empty also
+
+[abc]*
+'' #empty string valid matches
+
+rest all are same as +
+[abc]*
+abcaaaa
+
+
+->>Examples of ? quantifier
+
+(abc)?
+'' #empty string matches. take entire abc either 0 times or 1 times
+
+abc string matches. take entire abc 1 times. see below
+(abc)?
+abc 
+
+
+->>Examples of {m} quantifier
+
+[eimt]
+I can take only character from e or i or m or t. What are strings that will match? There are 4 possible combinations
+
+[eimt]
+e
+
+[eimt]
+i
+
+[eimt]
+m
+
+[eimt]
+t
+
+
+[eimt]{4}
+I can take only character from e or i or m or t. And I can repeat it for 4 times.
+What are strings that will match? There are 4^4 = 256 possible combinations
+
+[eimt]{4}
+eimt
+
+[eimt]{4}
+eitm
+
+[eimt]{4}
+emit
+
+[eimt]{4}
+emti
+
+[eimt]{4}
+eimt
+
+[eimt]{4}
+eitm
+
+Note: not only anagrams
+
+[eimt]{4}
+eeee
+
+[eimt]{4}
+mmmm
+
+[eimt]{4}
+mmit
+
+->>Examples of {m,n} quantifier
+
+[eimt]{4, 8}
+[eimt]{4,}
+
+
+->> (Lecture 3) Special Characters -> Special symbol that are used for defining patterns
+
+[..]    set of possible character
+[^..]   all characters except in bracket
+.       any character except new line
+^       beginning of a string
+$       end of string
+R|S     string should match either R or S pattern
+
+
+->>[..]
+
+a string can have 1 single character which is either a or b or c
+[abc]
+
+we can define range also like a to f
+[a-f]
+
+we can define range also like a to z. Means any single lower case alphabet
+[a-z]
+
+
+[a-zA-Z0-9]
+lower case
+upper case
+digits
+special character
+
+for special characters we cant give a range. These are like > < = etc
+
+one or more lower case alphabets from a to z. Thats the meaning
+This below pattern represents any lower case word in dictionary
+[a-z]+
+
+Example 
+[a-z]+
+board #matches
+
+[a-z]+
+pen #matches
+
+
+One upper case letter and greater than equal to 1 lower case letters
+[A-Z][a-z]+
+
+[A-Z][a-z]+
+Ab
+
+[A-Z][a-z]*
+A
+
+[A-Z][a-z]*
+Accc
+
+
+->>[^..] all characters except those in square brackets
+
+[^a-z]+
+All strings with upper case and digit and special characters
+
+
+->> . any character except new line
+
+.
+Meaning of String with lower case, upper case, digit special character except new line
+. means anything
+
+.+
+Meaning of String with lower case, upper case, digit special character except new line 1 
+or more number of times
+
+What if I want just .
+Use escape sequence in this case before dot(.)
+
+\.+
+...........   #matches
+
+
+
+->> ^  beginning of string
+
+to check if string starts with http
+
+http
+i am httpbkacjkas c
+
+^http
+http://google.com
+
+^http.+
+http://google.com
+
+here .+ dot plus means any character any number of times
+So ^http.+ is used to match urls
+
+^http.+
+use http protocol #does not match as firs word is not http
+
+->> $  end of string
+
+com$
+com
+
+If you want something in beginning, add .+
+
+.+com$
+udemy.com
+
+
+->> R|S
+
+com|org
+udemy.com
+
+com|org
+study.org
+
+
+->>> Few examples of regex
+
+Example1: Firstname Lastname
+[A-Z][a-z]+ [A-Z][a-z]+
+Akashdeep Singh
+
+Example2: Variable name in python
+1. can contain only lower case char, upper case char, digits and underscore
+2. can only start with lower case char, upper case char and underscore. Can not start with digit
+
+[a-zA-Z_][a-zA-Z0-9_]*
+item1
+
+Example3: time
+[012][0-9]:[0-5][0-9]
+11:30
+
+Example4: Domain name
+[a-zA-Z0-9]+\.(com|org|net)$
+udemy.com
+
+->> (Lecture 4) Sequences
+
+\d   digit. same as [0-9]
+\D   non-digits #[a-zA-Z+-....] #lower case char, upper case char, special char
+\w   alphanumeric [a-zA-Z0-9]
+\W   non-alphanumeric #these are special characters
+\s   white space. '' \t \f \r \n  
+\S   non white space characters
+\A   starting of a string.Same as carrot character ^
+\Z   end of string. Same as $ character 
+
+
+on a white paper, if we write space, then its a white space
+There are other chars also which give space
+Like 
+\t  is tab
+\f is 
+\r is carriage return
+\n is new line
+when they are written, space is printed. 
