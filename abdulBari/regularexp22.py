@@ -35,4 +35,3 @@ print(re.split(pattern, s, maxsplit = 0, flags= 0))
 # (Lecture 2)->> How to define patterns
 # Quantifiers -> Special symbol that are used for defining patterns
 # 
-

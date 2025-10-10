@@ -1,0 +1,71 @@
+ASCII code range is 0 to 127 (total 128 means 2^7 means 7 bits are enough for all character)
+ASCII are of 7 bits
+
+A - 65
+B - 66
+.
+.
+Z - 90
+
+English is Bicameral language
+
+a - 97
+b - 98 
+.
+.
+z - 122
+
+For every key on keyboard, there is ASCII code. There are some printable and non printable keys
+
+0 - 48
+1 - 49
+.
+.
+9 - 57
+
+see image on internet for other keys/characters
+space - 32
+
+13 is for enter key (non printable characters or control keys)
+
+
+->>
+x = 'A'
+y = 65
+
+in memory 65 is stored of both x and y
+ord('A') gives 65 
+
+
+chr(97) takes ASCII code and gives char in return
+Ans = a
+
+->>ASCII vs Unicode
+ASCII is for English alphabets
+Unicode is unified code for all the languages
+
+Unicode is of 1 byte(8 bit), 2 byte(16 bit), 4 byte(32 bit)
+
+For representing unicode, some formats are followed. These are unicode transformation formats.
+Also called UTF-8, UTF-16, UTF-32 formats respectively.
+
+UTF-8 allows 1 byte, 2 byte and 4 byte. UTF-8 means minimum 8 bits(1 byte)
+UTF-16 allows 2 byte and 4 byte only
+UTF-32 allows 4 byte only.
+
+
+s = '\u03b1'
+print(s)
+
+t = '\u03b1\u03b2\u03b3'
+print(t)
+
+Each of these codes is called code point
+
+1 hexadecimal digit takes 4 bits 
+so in total 16 bits
+s = '\u0041'
+ans = A
+
+s = '\x41'
+ans = A

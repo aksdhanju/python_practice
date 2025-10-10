@@ -1,3 +1,34 @@
+Summary: 
+-> (Lecture 2) Quantifier
+In patterns we can repeat characters. Quantifiers define how many times we can repeat characters
+
++      1 or more times repetition is allowed
+*      0 or more times repetition is allowed
+?      0 or 1 (Nothing or just 1 time)
+{m}    exactly m times
+{m,n}  from m to n. minimum is m. maximum is n. If m, n not mentioned, m is 0 and n is infinity
+
+-> (Lecture 3) Special Characters -> Special symbol that are used for defining patterns
+
+[..]    set of possible character
+[^..]   all characters except in bracket
+.       any character except new line
+^       beginning of a string
+$       end of string
+R|S     string should match either R or S pattern
+
+
+-> (Lecture 4) Sequences/Escape characters
+
+\d   digit. same as [0-9]
+\D   non-digits #[a-zA-Z+-....] #lower case char, upper case char, special char
+\w   alphanumeric [a-zA-Z0-9]
+\W   non-alphanumeric #these are special characters
+\s   white space. '' \t \f \r \n  
+\S   non white space characters
+\A   starting of a string.Same as carrot character ^
+\Z   end of string. Same as $ character 
+
 We can find a substring using a pattern and patterns are defined using regular expressions
 Its like finding a substring in a string but using a pattern
 
@@ -57,8 +88,6 @@ s6 = 'babbcc'
 s7 = 'cab'
 
 So this single pattern is matching so many strings
-
-
 
 ->> (Lecture 2) How to define patterns
 ->> (Lecture 2) Quantifiers -> Special symbol that are used for defining patterns
@@ -357,3 +386,24 @@ Like
 \r is carriage return
 \n is new line
 when they are written, space is printed. 
+
+
+Example1: Pattern for Date
+
+\d{2}\/\d{2}\/\d{4}
+31/12/1970
+
+
+assertions in regex
+imposing conditions in regex pattern
+
+Example2: Password
+
+[\w_]{8,}
+abC_1234
+
+Example3: email id
+
+\w+\.?\w+@\w+\.(com|org)\Z
+my.id1@gmail.com
+
