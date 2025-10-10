@@ -1,0 +1,113 @@
+Section 40: Built in functions and Modules
+Lecture 1->>
+Lecture 2->> Object and Attribute Function: Built in
+
+(1)-> type(1)
+<class 'int'>
+
+We are getting class for a given object.
+If object = 1 is integer, we get type as class 'int'
+
+
+(2)-> isinstance(object, classinfo)
+this function checks if object belongs to given class. 
+In other words, is object an instance of given class
+if yes, it returns true, else returns false
+
+
+(3)-> hasattr(object, attribute)
+to check if object/class has given attribute/method 
+
+text = "Hello"
+print(hasattr(text, 'lower')) #true
+print(hasattr(text, 'search')) #false
+
+str class has attribute/function called lower
+
+We can check above for list, dict, set classes also
+
+
+(4)-> getattr(object, attribute, default)
+if a class or module has some attribute/method/function, it will give you reference to that attribute/method/function
+
+(5)-> id()
+calling it will give you unique number/id corresponding to that object
+
+x = 10
+y = 10
+print(id(x))  
+print(id(y))
+
+ids will be same because both x and y are referring to same object 10
+
+
+l1 = [1,2,3,4,5]
+l2 = [1,2,3,4,5]
+print(id(l1))  
+print(id(l2))
+
+why id of l1 and l2 are different?
+Lists (l1, l2) are mutable and separately created
+
+When you do:
+
+l1 = [1,2,3,4,5]
+l2 = [1,2,3,4,5]
+print(id(l1))
+print(id(l2))
+
+Even though l1 and l2 contain the same elements,
+Python creates two different list objects in memory.
+
+That’s why:
+
+🔹 l1 is l2 → False
+🔹 id(l1) != id(l2)
+🔹 But l1 == l2 → True (because their contents are equal)
+
+
+
+(6) -> dir(object = None, /)
+
+gives all members(functions and attributes) of a class or a module
+example 
+dir(list)
+dir(math)
+
+(7) -> repr(object)
+
+text = 'Hello World'
+print(repr(text)) #prints actual representation of object. does not remove quotes or anything
+print(text)
+
+
+Lecture 3->> Object and Attribute Function: Built in
+(skipped)
+
+Lecture 4->> What are modules
+How to write our main modules?
+
+In other languages, they are called libraries or packages
+Modules contain predefined variables, functions, classes, objects
+Means readymade things are kept in form of modules.
+Related functions, attributes are kept in same module
+
+Example In python there are modules for math, datetime, regular expression
+
+import re
+
+you can use alias instead of module name
+import datetime as dt
+
+instead of doing re.search, directly call search using below import statement
+from re import *
+
+
+from math import *
+
+Question: How to write our main modules?
+In our python program, function40 is name of our module
+
+Every python program can act as a module.
+
+Go through notes mentioned in function40_2.py

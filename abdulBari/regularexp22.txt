@@ -1,0 +1,22 @@
+We can find a substring using a pattern and patterns are defined using regular expressions
+Its like finding a substring in a string but using a pattern
+
+Use of regular expression:
+
+1. Text processing
+Search and replace text
+
+2. Data validation
+Check data in proper format
+
+3. Extracting information
+Extracting info from large text
+
+Agenda:
+A. What is pattern matching?
+B. Functions (in python for regex)
+C. Regular expressions
+-Quantifiers
+-Special Characters
+-Sequences
+
