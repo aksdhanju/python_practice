@@ -69,3 +69,41 @@ ans = A
 
 s = '\x41'
 ans = A
+
+->>Escape Sequence: Special Characters
+
+\t  is tab
+\f is line feed
+\r is carriage return
+\n is new line
+\v vertical tab
+\b backspace
+\a alert
+\  ignore newline
+\\ backslash
+\' 
+
+
+\t is tab. moves cursor by 4 spaces to the right
+\f is line feed. cursor moves to next line but in same column
+\r is carriage return. \r brings the cursor to beginning of same/current line
+Carriage was there in old type writers. brings carriage to beginnng of line
+\n is new line. moves cursor to new line
+\v vertical tab. Moves vertically to next line. Usually its 1 line. Similar to line feed
+\b backspace.  moves cursor 1 position to the left
+\a alert. you hear a beap sound
+\  ignore newline
+\\ backslash
+\' quote
+\" double quote
+\o octal
+\x hexadecimal
+
+
+cursor or carrot
+shows position where printing is done
+Escape sequences are used to control the position of carrot or cursor
+
+
+
+->>Escape Sequence: Special Characters
