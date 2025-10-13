@@ -81,7 +81,10 @@ ans = A
 \a alert
 \  ignore newline
 \\ backslash
-\' 
+\' quote
+\" double quote
+\o octal
+\x hexadecimal
 
 
 \t is tab. moves cursor by 4 spaces to the right
