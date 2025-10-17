@@ -1,0 +1,129 @@
+in programming, there are 2 things. data and opeartions on that data
+
+class conatin 2 things:
+1. properties: data members
+2. methods: class ke member functions
+
+class encapsulates properties and methods
+
+l1 = list(1,2,3,4)
+l1.insert(2,10)
+
+abstraction means hiding the details. I dont know how insert
+ is working/implemented behind the scenes
+
+data is hidden. it is access through function. 
+Using abstracton, we achieve data hiding.
+
+
+Example 1:
+Rectangle
+-properties
+1. length
+2. breadth
+
+-methods
+1. area()
+2. perimeter()
+
+Properties are data
+Methods are information. Information is processed data.
+ Information we can make as function. Information related things come in function.
+ Also behaviour of object come in function
+
+Date of birth is data. Age is information.
+To calculate age, one should know today's date and date of birth.
+
+Example 2:
+Car:
+properties
+- brand
+- model
+- color
+- fuelType
+- seats
+functions
+- ignitionOn()
+- changeGear(num)
+- accelerate()
+- break()
+
+
+Example 3:
+Bank Account. Its an intangible object
+properties
+- accNum
+- name
+- balance
+functions
+- open()
+- deposit(amt)
+- withdraw(amt)
+- close()
+
+Example 4:
+Order
+properties
+- orderNum
+- customerDetails
+- itemList
+- status
+functions
+- selectItem(item)
+- deleteItem(item)
+- confirmOrder(amt)
+- delivered()
+
+
+->>Section 4: class variables and methods
+Metadata of object is in class variables
+Just identify from examples which information belongs to instance 
+and which belongs to class
+
+Example 1:
+House class. It is actually a blue print of a house
+Actual house is instance of house
+
+Information about class(plan or blueprint)
+-Architect name (who made plan of house)
+-Project name
+-Number of houses
+
+Information about house/instance/object
+-Number of rooms
+-Number of doors
+
+
+class information is like Metadata
+it is stored in class variables
+
+Example 2:
+Car class
+
+Information about class
+-engineer name
+-company name
+-number of cars manufactured
+-price of a car
+
+Example 3:
+Television
+
+Information about class
+-engineer name(who designed circuitry for television)
+-company name
+-price of television
+
+Example 4:
+Bank Account
+
+Information about class
+-bank name
+-number of accounts in bank
+
+Example 5:
+Rectangle class
+
+Information about class
+-number of rectangles
+
