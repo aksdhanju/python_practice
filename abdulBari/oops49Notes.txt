@@ -74,12 +74,22 @@ functions
 - confirmOrder(amt)
 - delivered()
 
-
 ->>Section 4: class variables and methods
-Metadata of object is in class variables
+class variables
+1. Metadata of object is in class variables
+2. Class variables are declared outside all methods
+3. These are created only once but common to all instances of class
+4. Can be accessed using object or class name
+5. Used as shared data
+
+class methods:
+1. Decorator @classmethod is Used
+2. They can access only class variables
+3. They can be called using instances or class name
+4. First parameter is cls
+
 Just identify from examples which information belongs to instance 
 and which belongs to class
-
 Example 1:
 House class. It is actually a blue print of a house
 Actual house is instance of house
@@ -127,3 +137,10 @@ Rectangle class
 Information about class
 -number of rectangles
 
+
+
+->>Section 5: static methods
+static methods are different from class methods
+1. These are utility methods. Provide extra facility in class
+
+->>Section 6: static methods
