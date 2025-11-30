@@ -18,8 +18,7 @@ def tail_basic(filename, n=10):
             last_lines = lines[-n:]
             
             for line in last_lines:
-                print(line, end='')
-                
+                print(line, end='')       
     except FileNotFoundError:
         print(f"tail: {filename}: No such file or directory")
     except PermissionError:
@@ -27,4 +26,5 @@ def tail_basic(filename, n=10):
 
 # Test the function
 if __name__ == "__main__":
-    tail_basic("example.txt", 5)
+    file_name = '/Users/aksdhanju/yipit/data/rediscli_aio.py'
+    tail_basic(file_name, 5)

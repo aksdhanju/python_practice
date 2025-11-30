@@ -1,0 +1,39 @@
+The prefix b'...' means the content is bytes, not a decoded string.
+
+So the tail function read bytes from the file instead of text — and since you printed it without converting to text, Python prints it in its repr form, which shows bytes like:
+
+b"...."
+
+
+📌 What does file.read() do?
+file.read() reads the entire remaining content of the file into memory.
+If file is opened with 'r' (text mode), read() returns a string
+If file is opened with 'rb' (binary mode), read() returns bytes
+
+In your implementation:
+with open(filename, 'rb') as file:
+    data = file.read()
+→ data will be a bytes object.
+
+📌 What does this do?
+print(data.decode(errors="replace"), end="")
+
+Step-by-step:
+Expression	Meaning
+data.decode()	Converts bytes to a string using UTF-8 by default
+errors="replace"	If there are invalid characters, replace them with � instead of crashing
+end=""	Do not add newline after printing
+
+So the line safely prints the text representation of the binary data.
+Without .decode(), printing raw bytes shows a b'...' prefix.
+
+📌 Why do we use errors="replace"?
+Because a file might contain:
+UTF-8 text
+ASCII text
+mixed encoding
+binary data
+
+If Python cannot decode some bytes, it would normally raise:
+UnicodeDecodeError
+Using "replace" avoids the crash and shows replacement characters instead — safer for logs.
