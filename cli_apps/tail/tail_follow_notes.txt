@@ -1,0 +1,41 @@
+✅ What is Log Rotation?
+
+Applications (especially servers) continuously write logs. If logs are never deleted or split, a single file can grow to GBs or even TBs, causing:
+
+Disk space exhaustion
+
+Slow tailing and reading
+
+Difficulty archiving older logs
+
+
+Log rotation solves this by:
+
+Renaming the current log file
+
+Creating a new empty file with the same original name
+
+
+🔹 Example
+
+Suppose an application writes logs to:
+
+app.log
+
+After rotation (triggered by size/time rule), it becomes:
+
+app.log.1   (previous logs)
+app.log     (new fresh file)
+
+Over time:
+
+app.log.3
+app.log.2
+app.log.1
+app.log   (current writing)
+
+Sometimes older logs are compressed too:
+
+app.log.4.gz
+
+So during rotation, the file content changes, but the filename (app.log) stays the same — this is why tailing requires logic to detect that the file changed behind the scenes.
