@@ -1,0 +1,115 @@
+Great question — this behavior can definitely feel confusing the first time you run into it.
+Let’s break down exactly why your Python server receives a request even if you start it after typing localhost:4221/abcdefgh in Chrome.
+
+Yes — Chrome stored the request, but not permanently.
+Chrome queued the request and automatically retried it once your server became available.
+
+Why does this happen?
+1. Browsers automatically retry failed connections
+
+When you type:
+
+http://localhost:4221/abcdefgh
+
+Chrome tries to connect:
+connect("localhost", 4221)
+
+If no server is running, Chrome does not immediately give up forever.
+
+Instead, it will:
+wait a bit
+retry connection a few times
+sometimes keep the tab pending and retry again when network changes or events occur
+
+This is a browser feature meant to help with:
+unstable local servers during development
+slow-starting backend processes
+So the request wasn't stored on your Python server — it was stored by Chrome, in memory, and Chrome automatically re-issued it.
+
+2. Chrome continues trying in background
+
+You might have noticed:
+
+The tab shows "Connecting..."
+
+Only after multiple failed attempts would Chrome show an error like "ERR_CONNECTION_REFUSED"
+
+Until Chrome gives up, it will keep trying to connect to port 4221.
+If you start your Python server at that time…
+
+👉 Chrome instantly connects
+👉 Your server's accept() returns
+👉 You think the request came from the past — but Chrome just retried it.
+
+3. OS does not store the request
+
+Operating systems do not buffer HTTP requests when no server is listening.
+
+No TCP socket on that port → OS rejects connection
+
+Browser receives ECONNREFUSED
+
+Browser decides whether to retry
+
+So the OS is not storing anything.
+
+
+
+
+
+
+
+Question 2:
+client_socket, addr = server_socket.accept() # wait for client 
+with client_socket: 
+    data = client_socket.recv(1024)
+    
+Yes — with client_socket: is Python’s syntax for auto-closing the socket.
+
+This is called a context manager.
+✅ Does with client_socket: automatically close the socket?
+✔️ YES.
+When you write:
+with client_socket:
+    ...
+Python does the following: Calls client_socket.__enter__()
+Runs the block inside with
+When the block ends — even if an exception happens — Python calls client_socket.__exit__()
+And __exit__() on a socket closes the socket automatically.
+So after the block is done, client_socket.close() is automatically executed.
+This is the same mechanism used in: with open("file.txt") as f:
+Except now it's for sockets.
+
+🧠 Why is with useful for sockets?
+Benefits:
+You never forget to close the socket
+It closes even if an error happens
+Cleaner code
+No resource leaks
+
+This means:
+with client_socket:
+    ...
+is equivalent to:
+
+try:
+    ...
+finally:
+    client_socket.close()
+
+🔍 Is server_socket auto-closed?
+No.
+You only used with on client_socket.
+
+If you want server_socket to auto-close, you’d do:
+with socket.create_server(("localhost", 4221)) as server_socket:
+    client_socket, addr = server_socket.accept()
+    with client_socket:
+        ...
+
+📌 Important about with socket behavior
+Sockets support the context manager protocol starting from Python 3.2. They implement:
+def __exit__(self, *args):
+    self.close()
+
+So yes — the socket is guaranteed to close.
