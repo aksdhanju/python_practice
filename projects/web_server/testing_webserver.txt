@@ -1,0 +1,152 @@
+2. How to Run Your Test Commands
+
+You wrote:
+(sleep 3 && printf "GET / HTTP/1.1\r\n\r\n") | nc localhost 4221 &
+(sleep 3 && printf "GET / HTTP/1.1\r\n\r\n") | nc localhost 4221 &
+(sleep 3 && printf "GET / HTTP/1.1\r\n\r\n") | nc localhost 4221 &
+
+❓ Do these need multiple terminals?
+➡️ NO.
+
+You can run all three in one terminal.
+Because each ends with &, they run as background jobs — not blocking each other.
+What happens:
+Each test waits 3 seconds.
+Then pipes HTTP request into nc (netcat).
+Netcat opens a TCP connection and sends the request.
+Your server handles them concurrently.
+You can run many:
+
+for i in {1..50}; do
+  (sleep 3 && printf "GET /echo/hi$i HTTP/1.1\r\n\r\n") | nc localhost 4221 &
+done
+
+✅ 3. Stress-Testing Tools
+
+You asked for tools like wrk, ab, and Python scripts.
+Here they are.
+🧪 A. Using wrk (very powerful)
+Install:
+brew install wrk   # Mac
+sudo apt install wrk   # Linux
+
+Run:
+wrk -t4 -c200 -d10s http://localhost:4221/
+
+Meaning:
+-t4 → 4 threads generating load
+-c200 → 200 concurrent connections
+-d10s → run test for 10 seconds
+You’ll get:
+requests/sec
+latency distributions
+transfer rate
+
+🧪 B. Using ApacheBench (ab)
+
+Install:
+brew install httpd
+# OR
+sudo apt install apache2-utils
+
+Run:
+ab -n 10000 -c 100 http://localhost:4221/
+
+Meaning:
+-n 10000 → send 10,000 total requests
+-c 100 → 100 in parallel
+
+🧪 C. Python Load Script (Asyncio Load Generator)
+
+Here is a Python script that stresses your server using asyncio:
+
+import asyncio
+import time
+
+HOST = "localhost"
+PORT = 4221
+TOTAL_REQUESTS = 1000
+CONCURRENCY = 200
+
+async def send_request(i):
+    reader, writer = await asyncio.open_connection(HOST, PORT)
+    req = "GET /echo/test{} HTTP/1.1\r\n\r\n".format(i)
+    writer.write(req.encode())
+    await writer.drain()
+
+    await reader.read(1024)
+    writer.close()
+    await writer.wait_closed()
+
+async def worker():
+    for i in range(TOTAL_REQUESTS // CONCURRENCY):
+        await send_request(i)
+
+async def main():
+    tasks = [asyncio.create_task(worker()) for _ in range(CONCURRENCY)]
+    start = time.time()
+    await asyncio.gather(*tasks)
+    end = time.time()
+    print(f"Completed {TOTAL_REQUESTS} requests in {end - start:.2f} seconds")
+
+asyncio.run(main())
+
+Output example:
+Completed 1000 requests in 0.84 seconds
+
+This script:
+opens hundreds of concurrent connections
+sends requests
+closes them
+measures overall performance
+
+
+
+
+Multiprocessing Load Tester (High-Load Version)
+-------------------------------------------------------------
+
+This script will:
+
+create N processes
+
+each process will create M concurrent async connections
+
+total load = N × M requests
+
+
+What This Achieves
+
+If you set:
+
+PROCESSES = cpu_count() (e.g., 8)
+
+CONCURRENCY_PER_PROCESS = 500
+
+REQUESTS_PER_PROCESS = 5000
+
+You generate:
+
+8 × 5000 = 40,000 requests
+with up to 8 × 500 = 4000 concurrent sockets
+
+This is enough to overwhelm any Python server and measure real performance.
+
+-------------------------------------------------------------
+🔍 3. How Multiprocessing Helps vs Single Process
+-------------------------------------------------------------
+Feature	Single process	Multiprocessing
+CPU usage	1 core only	Uses all CPU cores
+Max concurrency	Limited by event loop load	Linear scaling with processes
+Max socket creation rate	Medium	High
+Perfect for	Normal testing	Heavy stress testing
+Limitations	GIL bottleneck	More memory usage
+
+
+
+🎯 When Should You Use Multiprocessing?
+Use it when:
+✔️ You want to simulate thousands of clients
+✔️ You want to push your server to its breaking point
+✔️ You want higher requests per second
+✔️ You have a machine with multiple CPU cores
